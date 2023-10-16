@@ -2,11 +2,13 @@ package com.kh.member.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.member.model.service.MemberService;
 import com.kh.member.model.vo.Member;
@@ -56,7 +58,19 @@ public class MemberInsertController extends HttpServlet {
 		Member m = new Member(userId, userPwd, userName, phone, email, address, interest);
 		
 		// 3) sql요청 => service -> dao => spl
-		new MemberService().insertMember(m);
+		int result = new MemberService().insertMember(m);
+		
+		if(result > 0) {  //회원가입 성공
+			HttpSession session = request.getSession();
+			session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다");
+			// jsp url 재요청 => index페이지
+			response.sendRedirect(request.getContextPath());
+		} else {  //회원가입 실패
+			// 에러문구가 보여지는 에러페이지 (포워드)
+			request.setAttribute("errorMsg", "회원가입에 실패하였습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			view.forward(request, response);
+		}
 		
 	
 	

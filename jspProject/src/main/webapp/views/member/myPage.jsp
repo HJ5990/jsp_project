@@ -15,9 +15,9 @@
         margin-top: 50px;
     }
 
-    #enroll-form table{margin: auto;}
+    #mypage-form table{margin: auto;}
 
-    #enroll-form input{margin: 5px;}
+    #mypage-form input{margin: 5px;}
 
 
 
@@ -26,45 +26,43 @@
 </head>
 <body>
 <%@ include file="../common/menubar.jsp" %>
+<%
+	String userId = loginUser.getUserId();
+	String userName = loginUser.getUserName();
+	String phone = (loginUser.getPhone() == null) ? "" : loginUser.getPhone();
+	String email = (loginUser.getEmail() == null) ? "" : loginUser.getEmail();
+	String address = (loginUser.getAddress() == null) ? "" : loginUser.getAddress();
+	String interest = (loginUser.getInterest() == null) ? "" : loginUser.getInterest();
+%>
 
     <div class="outer">
         <br>
-        <h2 align="center">회원가입</h2>
-        <form action="<%=contextPath %>/insert.me" id="enroll-form" method="post">
+        <h2 align="center">마이페이지</h2>
+        <form action="" id="mypage-form" method="post">
             <table>
                 <tr>
                     <td>* 아이디</td>
-                    <td><input type="text" name="userId" maxlength="12" required></td>
-                    <td><button type="button">중복확인</button></td>
-                </tr>
-                <tr>
-                    <td>* 비밀번호</td>
-                    <td><input type="password" name="userPwd" maxlength="15" required></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>* 비밀번호 확인</td>
-                    <td><input type="password" name="userPwdCheck" maxlength="15" required></td>
+                    <td><input type="text" name="userId" maxlength="12" value="<%=userId %>" readonly></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>* 이름</td>
-                    <td><input type="text" name="userName" maxlength="6" required></td>
+                    <td><input type="text" name="userName" maxlength="6" value="<%=userName %>"></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>전화번호</td>
-                    <td><input type="text" name="phone" placeholder="- 포함해서 입력"></td>
+                    <td><input type="text" name="phone" placeholder="- 포함해서 입력" value="<%=phone %>"></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>이메일</td>
-                    <td><input type="email" name="email" ></td>
+                    <td><input type="email" name="email" value="<%=email %>"></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>주소</td>
-                    <td><input type="text" name="address" ></td>
+                    <td><input type="text" name="address" value="<%=address %>"></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -91,28 +89,33 @@
                     </td>
                 </tr>
             </table>
+            
+            <script>
+            	const interest = "<%=interest%>";   // 운동, 낚시
+            	const inputArr = document.querySelectorAll("input[name=interest]");
+            	console.log(interest);
+            	console.log(inputArr);
+            	
+            	for (let input of inputArr){ //가져온 checkbox 요소들을 전부 반복한다
+            		if (interest.includes(input.value)){ // interest에 input.value의 값이 포함되어 있다면 true
+            			input.checked = true; // 해당 input의 checkbox는 true로 변경 (체크처리)
+            		}
+            	}
+            
+            </script>
 
             <br><br>
 
             <div align = "center">
-                <button type="submit" onclick="return checkPwd()">회원가입</button>
-                <button type="reset">초기화</button>
+                <button type="submit">정보변경</button>
+                <button type="button">비밀번호변경</button>
+                <button type="button">회원탈퇴</button>
             </div>
 
             <br><br>
 
         </form>
 
-        <script>
-            function checkPwd(){
-                let pwdInpt = document.querySelector('#enroll-form input[name=userPwd]');
-                let pwdCheckInpt = document.querySelector('#enroll-form input[name=userPwdCheck]');
-                if (pwdInpt.value !== pwdCheckInpt.value){
-                    alert("비밀번호가 일치하지 않습니다.");
-                    return false;
-                }
-            }
-        </script>
     </div>
 </body>
 </html>
