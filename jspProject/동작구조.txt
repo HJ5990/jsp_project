@@ -1,0 +1,25 @@
+localhost:8002/jsp        => 메인페이지 index.jsp (webapp)
+
+*로그인서비스
+/jsp/login.me    => 로그인 요청처리 후 실패했을 경우 => views/common/errorPage.jsp 응답
+	        => 		 성공했을 경우 => /jsp	url재요청 => 메인페이지 index.jsp
+
+*회원가입서비스
+/jsp/enrollForm.me => 회원가입페이지 views/member/memberEnrollForm.jsp 응답(서블릿,포워딩)
+/jsp/insert.me  	=> 회원가입 요청처리 후 실패했을 경우 => views/common/errorPage.jsp 응답
+		=>		        성공했을 경우 => /jsp		url재요청 => 메인페이지 index.jsp
+
+
+*마이페이지서비스
+/jsp/myPage.me => 마이페이지 views/member/myPage.jsp 응답(서블릿)
+
+/jsp/update.me => 정보변경 요청처리 후 실패했을 경우 => views/common/errorPage.jsp 응답
+	        => 		    성공했을 경우 => /jsp/myPage.me	    url재요청 => views/member/myPage.me 응답
+
+/jsp/updatePwd.me => 비번변경 요청처리 후 실패했을 경우 => views/common/errorPage.jsp 응답
+		 => 		         성공했을 경우 = >  /jsp/myPage.me	    url재요청 => views/member/myPage.me 응답
+
+
+
+
+

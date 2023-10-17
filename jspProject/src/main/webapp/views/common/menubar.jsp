@@ -49,6 +49,17 @@
         
     }
 </style>
+
+	<!-- bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- jQuery 3.7.1 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
 
@@ -113,9 +124,9 @@
 
     <br clear="both"><br>
 
-    <div class="nav-area">
-        <div class="menu"><a href="">HOME</a></div>
-        <div class="menu"><a href="">공지사항</a></div>
+    <div class="nav-area" align="center">
+        <div class="menu"><a href="<%=contextPath%>">HOME</a></div>
+        <div class="menu"><a href="<%=contextPath%>/views/notice/noticeListView.jsp">공지사항</a></div>
         <div class="menu"><a href="">일반게시판</a></div>
         <div class="menu"><a href="">사진게시판</a></div>
     </div>

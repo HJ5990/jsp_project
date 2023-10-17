@@ -50,6 +50,17 @@ public class Member {
 		this.interest = interest;
 	}
 	
+	// 정보변경용 생성자
+	public Member(String userId, String userName, String phone, String email, String address, String interest) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.interest = interest;
+	}
+	
 	
 
 	
@@ -57,6 +68,8 @@ public class Member {
 	public int getUserNo() {
 		return userNo;
 	}
+
+
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
