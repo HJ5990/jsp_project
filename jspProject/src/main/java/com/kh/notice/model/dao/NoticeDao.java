@@ -10,15 +10,13 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import static com.kh.common.JDBCTemplate.*;
-
-import com.kh.member.model.dao.MemberDao;
 import com.kh.notice.model.vo.Notice;
 
 public class NoticeDao {
 	private Properties prop = new Properties();
 	
 	public NoticeDao() {
-		String filepath = MemberDao.class.getResource("/db/sql/notice-mapper.xml").getPath();
+		String filepath = NoticeDao.class.getResource("/db/sql/notice-mapper.xml").getPath();
 		try {
 			prop.loadFromXML(new FileInputStream(filepath));
 		} catch (IOException e) {
@@ -168,8 +166,6 @@ public class NoticeDao {
 		}
 		return result;	
 	}
-	
-	
 	
 	
 }

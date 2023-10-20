@@ -59,7 +59,7 @@
             <% if (loginUser != null && loginUser.getUserId().equals(n.getNoticeWriter())) { %>
             <!-- 해당 글을 쓴 사람이 현재 로그인 한 사람일때만-->
             <a href="<%=contextPath %>/updateForm.no?num=<%=n.getNoticeNo() %>" class="btn btn-sm btn-warning">수정하기</a>
-            <a href="<%=contextPath %>/deleteNotice.no?num=<%=n.getNoticeNo() %>" class="btn btn-sm btn-danger">삭제하기</a>
+            <a href="<%=contextPath %>/delete.no?num=<%=n.getNoticeNo() %>" class="btn btn-sm btn-danger">삭제하기</a>
             <%} %>
         </div>
     </div>

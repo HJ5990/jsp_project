@@ -1,6 +1,7 @@
-package com.kh.notice.controller;
+package com.kh.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,19 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.notice.model.service.NoticeService;
+import com.kh.board.model.service.BoardService;
+import com.kh.board.model.vo.Category;
 
 /**
- * Servlet implementation class NoticeDeleteController
+ * Servlet implementation class BoardEnrollFormController
  */
-@WebServlet("/delete.no")
-public class NoticeDeleteController extends HttpServlet {
+@WebServlet("/enrollForm.bo")
+public class BoardEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public BoardEnrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,18 +31,11 @@ public class NoticeDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Category> list = new BoardService().selectCategoryList();
 		
-		int noticeNo = Integer.parseInt(request.getParameter("num"));
-		int result = new NoticeService().deleteNotice(noticeNo);
-		
-		if (result > 0) { //성공
-			request.getSession().setAttribute("alertMsg", "성공적으로 공지사항을 삭제하였습니다");
-			response.sendRedirect(request.getContextPath()+ "/list.no");
-		} else { //실패
-			request.setAttribute("errorMsg", "공지사항 삭제에 실패하였습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-			
-		}
+		// 응답뷰요청
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/board/boardEnrollForm.jsp").forward(request, response);
 	
 	}
 
