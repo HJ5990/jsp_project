@@ -4,6 +4,8 @@ import java.sql.Date;
 
 public class Board {
 	
+
+
 	private int boardNo ;
 	private int boardType;
 	private String category;   // 실제타입은 int지만 조인해서 카테고리명을 가지고 올수도 있기때문에 String로 선언
@@ -13,6 +15,8 @@ public class Board {
 	private int count;
 	private String createDate;
 	private String status;
+	
+	private String titleImg;
 	
 	
 	public Board() {}
@@ -32,6 +36,8 @@ public class Board {
 		this.status = status;
 	}
 	
+
+
 	// list에서 사용하는 생성자
 	public Board(int boardNo, String category, String boardTitle, String boardWriter, int count, String createDate) {
 		super();
@@ -40,6 +46,18 @@ public class Board {
 		this.boardTitle = boardTitle;
 		this.boardWriter = boardWriter;
 		this.count = count;
+		this.createDate = createDate;
+	}
+	
+	// board 디테일 페이지에서 사용하는 생성자
+	public Board(int boardNo, String category, String boardTitle, String boardContent, String boardWriter,
+			String createDate) {
+		super();
+		this.boardNo = boardNo;
+		this.category = category;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardWriter = boardWriter;
 		this.createDate = createDate;
 	}
 
@@ -115,6 +133,14 @@ public class Board {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
 	}
 
 	@Override

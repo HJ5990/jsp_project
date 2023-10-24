@@ -42,10 +42,10 @@ public class BoardInsertController extends HttpServlet {
 //		String boradTitle = request.getParameter("title");
 //		System.out.println(boradTitle);
 		
-		// enctype이 multipart/form-data로 잘 전송되었을 경우 전반적인 내용이 실행되도록 코드변경이 필요
-		if (ServletFileUpload.isMultipartContent(request)) {
+		// enctype이 multipart/form-data로 잘 전송되었을 경우 전반적인 내용이 실행되도록 코드변경이 필요 
+		if (ServletFileUpload.isMultipartContent(request)) {   // 잘 전송되었을 경우 true반환
 			// 파일 업로드를 위한 라이브러리 : cos.jar(com.oreilly.servlet의 약자)
-			// www.servlets.com cos다운
+			// www.servlets.com cos다운 받아 lib에 넣어줌
 			
 			// 1. 전달되는 파일을 처리할 작업내용 (전달되는 파일의 용량제한, 저장시킬 폴더경로 설정)
 			// 1_1) 전달되는 파일의 용량제한(byte단위)
@@ -79,6 +79,7 @@ public class BoardInsertController extends HttpServlet {
 			 * 			꽃.jpg, 꽃1.jpg, 꽃2.jpg
 			 * 		reutrn 수정파일
 			 * }
+			 * 한글 또는 특수문자가 들어가면 서버에 따라서 읽지 못할 수 있음
 			 * 위와같은 방식이기 때문에 사용하지 않는다.
 			 * 
 			 * 나만의 방식대로 절대 겹치지 않도록 rename할 수 있는 fileRenamePolicy 클래스 만들기
@@ -86,7 +87,7 @@ public class BoardInsertController extends HttpServlet {
 			 * 
 			 */
 
-			// new MultipartReqest(request, 저장시킬폴더의경로, 용량제한, 인코딩값, 파일명을수정시켜주는객체)
+			// new MultipartReqest(request, 저장시킬폴더의경로, 용량제한, 인코딩값, 파일명을수정시켜주는객체)로 변환
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			// 3. DB에 기록할 데이터를 추출해서 VO에 차곡차곡 담아주자

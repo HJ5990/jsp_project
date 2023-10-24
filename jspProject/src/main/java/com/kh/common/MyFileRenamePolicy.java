@@ -33,6 +33,7 @@ public class MyFileRenamePolicy implements FileRenamePolicy{
 		
 		//.getParent() : 경로를 꺼내줌
 		File changeFile = new File(originFile.getParent(), changeName);
+		// originFile.getParent() > 해당파일의 경로를 꺼내줌
 		
 
 		return changeFile;

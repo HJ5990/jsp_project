@@ -86,6 +86,19 @@
                 <%} %>
             </tbody>
         </table>
+        
+        <script>
+	        $(function(){
+	    		$(".list-area>tbody>tr").click(function(){
+        			// $(this) => 클릭된 객체 (tr)을 가르킨다.
+        			// 객체.children() => 객체의 자식 노드들을 전부 가져온다 (td들)
+        			// 노드List.eq(index) => 노드List에서 해당 인덱스 값에 위치하는 값을 지정한다.
+        			// text() => 메서드를 그냥 호출하면 안의 텍스트를 반환하고, ()안에 값을 넣으면 그 값이 들어간다
+	    			location.href = "<%=contextPath%>/detail.bo?bno=" + $(this).children().eq(0).text();
+      	
+        		})
+        	})
+        </script>
 
         <br><br>
 

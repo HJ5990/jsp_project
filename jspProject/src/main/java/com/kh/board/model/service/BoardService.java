@@ -1,6 +1,9 @@
 package com.kh.board.model.service;
 
-import static com.kh.common.JDBCTemplate.*;
+import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.commit;
+import static com.kh.common.JDBCTemplate.getConnection;
+import static com.kh.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -55,6 +58,91 @@ public class BoardService {
 		return result1 * result2;
 	}
 	
+	public Board increaseCount(int boardNo) {
+		Connection conn = getConnection();
+		BoardDao bDao = new BoardDao();
+		
+		// 1) 조회수 1올리기
+		int result = bDao.increaseCount(conn, boardNo);
+		
+		Board b = null;
+		if (result > 0) {	
+			commit(conn);
+			// 2) detail 객체 불러오기
+			b = bDao.selectBoard(conn, boardNo);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return b;
+	}
 	
-
+	public Attachment selectAttachment(int boardNo) {
+		Connection conn = getConnection();
+		Attachment at = new BoardDao().selectAttachment(conn, boardNo);
+		close(conn);
+		return at;	
+	}
+	
+	public Board selectBoard(int boardNo) {
+		Connection conn = getConnection();
+		Board b = new BoardDao().selectBoard(conn, boardNo);
+		close(conn);
+		return b;
+	}
+	
+	public int updateBoard(Board b, Attachment at) {
+		Connection conn = getConnection();
+		int result1 = new BoardDao().updateBoard(conn, b);
+		
+		int result2 = 1;
+		if (at != null) { // 새로운 첨부파일이 있을 경우
+			if(at.getFileNo() != 0) { // 기존의 첨부파일이 있을 경우 = Attachment update
+				result2 = new BoardDao().updateAttachment(conn, at);
+			} else {  // Attachment inset
+				result2 = new BoardDao().insertNewAttachment(conn, at);
+			}
+		}
+		
+		if (result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1 * result2;
+	}
+	
+	public int insertThumbnailBoard(Board b, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+		// 보드 업로드
+		int result1 = new BoardDao().insertThumbnailBoard(conn, b);
+		
+		// Attachment 업로드
+		int result2 = new BoardDao().insertAttachmentList(conn, list);
+		
+		if (result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1 * result2;
+	}
+	
+	public ArrayList<Board> selectThumbnailList(){
+		Connection conn = getConnection();
+		ArrayList<Board> list = new BoardDao().selectThumbnailList(conn);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Attachment> selectAttachmentList(int boardNo){
+		Connection conn = getConnection();
+		ArrayList<Attachment> list = new BoardDao().selectAttachmentList(conn, boardNo);
+		close(conn);
+		return list;
+	}
+	
+	
 }

@@ -10,7 +10,7 @@ public class Attachment {
 	private String changeName;
 	private String filePath;
 	private Date uploadDate; 
-	private String fileLevel;
+	private int fileLevel;
 	private String status;
 
 
@@ -18,7 +18,7 @@ public class Attachment {
 
 
 	public Attachment(int fileNo, int refBoardNo, String originName, String changeName, String filePath,
-			Date uploadDate, String fileLevel, String status) {
+			Date uploadDate, int fileLevel, String status) {
 		super();
 		FileNo = fileNo;
 		this.refBoardNo = refBoardNo;
@@ -91,12 +91,12 @@ public class Attachment {
 	}
 
 
-	public String getFileLevel() {
+	public int getFileLevel() {
 		return fileLevel;
 	}
 
 
-	public void setFileLevel(String fileLevel) {
+	public void setFileLevel(int fileLevel) {
 		this.fileLevel = fileLevel;
 	}
 

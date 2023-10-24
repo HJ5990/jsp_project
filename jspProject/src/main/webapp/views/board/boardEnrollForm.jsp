@@ -12,7 +12,7 @@
     .outer{
         background: black;
         color: white;
-        height: 500px;
+        height: 550px;
         width: 1000px;
         margin: auto;
         margin-top: 50px;
