@@ -37,6 +37,8 @@ public class Member {
 		this.status = status;
 	}
 	
+
+	
 	// 회원가입용 생성자
 	public Member(String userId, String userPwd, String userName, String phone, String email, String address,
 			String interest) {
@@ -59,6 +61,14 @@ public class Member {
 		this.email = email;
 		this.address = address;
 		this.interest = interest;
+	}
+	
+	// test용
+	public Member(int userNo, String userName, String phone) {
+		super();
+		this.userNo = userNo;
+		this.userName = userName;
+		this.phone = phone;
 	}
 	
 	

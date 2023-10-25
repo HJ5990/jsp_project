@@ -14,15 +14,15 @@
         background: black;
         color: white;
         width: 1000px;
-        height: 500px;
+        height: auto;
         margin: auto;
         margin-top: 50px;
     }
-    .outer > table{
+    .outer table{
         border: 1px solid white;
         border-collapse: collapse;
     }
-    .outer > table tr, .outer > table td{
+    .outer table tr, .outer > table td{
         border: 1px solid white;
     }
 </style>
@@ -77,6 +77,94 @@
             <a href="<%=contextPath %>/updateForm.bo?bno=<%=b.getBoardNo() %>" class="btn btn-sm btn-warning">수정하기</a>
             <a href="" class="btn btn-sm btn-danger">삭제하기</a>
             <%} %>
+        </div>
+
+        <br>
+
+        <div id="reply-area">
+            <table align="center">
+                <thead>
+                    <tr>
+                        <th>댓글작성</th>
+                        <%if(loginUser != null) { %>
+                        <td>
+                            <textarea id="reply-content" cols="50" rows="3"></textarea>
+                        </td>
+                        <td>
+                            <button onclick="insertReply()">댓글등록</button>
+                        </td>
+                        <%} else { %>
+                         <td>
+                            <textarea id="reply-content" cols="50" rows="3" readonly>로그인 후 댓글작성 가능합니다</textarea>
+                        </td>
+                        <td>
+                            <button disabled>댓글등록</button>
+                        </td>
+                        <%} %>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <script>
+                window.onload = function(){
+                    // 댓글 가져와서 그려주기
+                    selectReplyList();
+                    setInterval(selectReplyList, 10000);  // 10초마다 로드
+                }
+                
+                function selectReplyList(){
+                    $.ajax({
+                        url : "rlist.bo",
+                        data : {
+                            bno : <%=b.getBoardNo()%>
+                        },
+                        success: function(res){
+                        	// 위에서가 아닌 success에서 그려줘야 화면 새로고침안하고 만들어짐 
+                            let str = ""
+                            
+                            for (let reply of res){
+                            	console.log(reply)
+                            	str += "<tr>"
+                            	+"<td>" + reply.replyWriter + "</td>"
+                            	+"<td>" + reply.replyContent + "</td>"
+                            	+"<td>" + reply.createDate + "</td>"
+                            	+"</tr>"
+                            }
+                        	document.querySelector("#reply-area tbody").innerHTML = str;
+
+                        },
+                        error : function(){
+                            console.log("댓글목록 조회 중 ajax 통신 실패");
+                        }
+                    })
+                }
+                
+                function insertReply(){
+                	$.ajax({
+                		url : "rinsert.bo",
+                		data : {
+                			content: document.getElementById("reply-content").value,
+                            bno: <%=b.getBoardNo()%>
+                		},
+                        type: "post",
+                        success: function(res){
+                            if(res > 0){  // 댓글작성 성공
+                            	document.getElementById("reply-content").value = "";
+                            	selectReplyList();
+                            }
+                        },
+                        error: function(res){
+							console.log("댓글 작성 중 ajax 통신 실패")
+                        }
+                	})
+                }
+
+
+            </script>
+
         </div>
 
 
