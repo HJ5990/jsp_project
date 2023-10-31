@@ -121,6 +121,7 @@ public class BoardListController extends HttpServlet {
 		//하지만 만약 maxPage가 13이라면?
 		endPage = endPage > maxPage ? maxPage : endPage;
 		
+		// * 페이징바를 만들때 필요한 객체
 		PageInfo pi = new PageInfo(currentPage,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 		
 		ArrayList<Board> list = new BoardService().selectList(pi);
